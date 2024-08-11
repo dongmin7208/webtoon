@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:webtoon/service/api_service.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -20,4 +21,10 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+
+  void getTodaysToons() {
+    ApiService().getTodaysToons();
+  }
 }
+// getTodaysToons
+
