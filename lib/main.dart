@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:webtoon/screens/home_screen.dart';
 
 void main() {
   runApp(const App());
@@ -11,14 +11,14 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Hello World'),
-        ),
-        body: const Center(
-          child: Text('Hello World'),
+      theme: ThemeData(
+        textTheme: const TextTheme(
+          displayLarge: TextStyle(
+            color: Color(0xFF232B55),
+          ),
         ),
       ),
+      home: const HomeScreen(),
     );
   }
 }
