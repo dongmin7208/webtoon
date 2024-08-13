@@ -2,34 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:webtoon/models/webtoon_model.dart';
 import 'package:webtoon/service/api_service.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomeScreen extends StatelessWidget {
+  HomeScreen({super.key});
 
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  List<WebtoonModel> webtoons = [];
-  bool isLoading = true;
-
-  @override
-  void initState() {
-    super.initState();
-    waitForWebToons();
-  }
-
-  void waitForWebToons() async {
-    webtoons = await ApiService().getTodaysToons();
-    setState(() {
-      isLoading = false;
-    });
-  }
+  Future<List<WebtoonModel>> webtoons = ApiService().getTodaysToons();
 
   @override
   Widget build(BuildContext context) {
-    print(webtoons);
-    print(isLoading);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -42,6 +21,31 @@ class _HomeScreenState extends State<HomeScreen> {
             fontSize: 24,
           ),
         ),
+      ),
+      body: FutureBuilder<List<WebtoonModel>>(
+        future: webtoons,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+              itemCount: snapshot.data?.length,
+              itemBuilder: (context, index) {
+                final webtoon = snapshot.data?[index];
+                return ListTile(
+                  title: Text(webtoon!.title),
+                  // subtitle: Text(webtoon.thumb),
+                  leading: Image.network(webtoon.thumb),
+                );
+              },
+            );
+          } else if (snapshot.hasError) {
+            return const Center(
+              child: Text("Failed to load data"),
+            );
+          }
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
       ),
     );
   }
