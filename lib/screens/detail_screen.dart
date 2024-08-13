@@ -12,9 +12,10 @@ class DetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        elevation: 4,
-        backgroundColor: const Color.fromARGB(255, 71, 98, 195),
+        elevation: 2,
+        backgroundColor: Colors.white,
         foregroundColor: Colors.green,
         title: Text(
           title,
@@ -25,19 +26,31 @@ class DetailScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Expanded(
-            child: Image.network(thumb, headers: const {
-              'Referer': 'https://www.comic.naver.com',
-            }),
-          ),
           const SizedBox(
-            height: 20,
+            height: 50,
           ),
-          Text(
-            id,
-            style: const TextStyle(
-              fontSize: 18,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Hero(
+                tag: id,
+                child: Container(
+                  width: 250,
+                  clipBehavior: Clip.hardEdge,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 15,
+                        offset: const Offset(10, 10),
+                        color: Colors.black.withOpacity(0.3),
+                      )
+                    ],
+                  ),
+                  child: Image.network(thumb),
+                ),
+              ),
+            ],
           ),
         ],
       ),
